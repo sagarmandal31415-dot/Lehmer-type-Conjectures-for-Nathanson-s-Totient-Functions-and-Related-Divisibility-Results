@@ -1,0 +1,39 @@
+def phi(n):
+    result = n
+    p = 2
+    m = n
+    while p * p <= m:
+        if m % p == 0:
+            while m % p == 0:
+                m //= p
+            result -= result // p
+        p += 1
+    if m > 1:
+        result -= result // m
+    return result
+
+LIMIT = 100000
+
+perfects = []
+p = 2
+while True:
+    mersenne = 2**p - 1
+    prime = True
+    d = 2
+    while d * d <= mersenne:
+        if mersenne % d == 0:
+            prime = False
+            break
+        d += 1
+    if prime:
+        N = 2**(p - 1) * (2**p - 1)
+        if N > LIMIT:
+            break
+        perfects.append(N)
+    p += 1
+
+perfects = set(perfects)
+
+for n in range(1, LIMIT + 1):
+    if phi(n) in perfects:
+        print(n, phi(n))
