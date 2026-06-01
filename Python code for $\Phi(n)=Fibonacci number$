@@ -1,0 +1,25 @@
+def phi(n):
+    result = n
+    p = 2
+    m = n
+    while p * p <= m:
+        if m % p == 0:
+            while m % p == 0:
+                m //= p
+            result -= result // p
+        p += 1
+    if m > 1:
+        result -= result // m
+    return result
+
+LIMIT = 100000
+
+fibs = {0, 1}
+a, b = 0, 1
+while b <= LIMIT:
+    fibs.add(b)
+    a, b = b, a + b
+
+for n in range(1, LIMIT + 1):
+    if phi(n) in fibs:
+        print(n, phi(n))
