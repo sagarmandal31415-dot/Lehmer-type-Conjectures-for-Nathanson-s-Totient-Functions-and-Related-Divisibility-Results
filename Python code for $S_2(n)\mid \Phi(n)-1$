@@ -1,0 +1,28 @@
+from sympy import factorint, mobius, divisors
+
+LIMIT = 100000
+
+def Phi(n):
+    if n == 1:
+        return 1
+    return sum(mobius(d) * pow(2, n // d) for d in divisors(n))
+
+def S2(n):
+    fac = factorint(n)
+
+    value = 1
+    for p, k in fac.items():
+        if p == 2:
+            return 0
+        value *= p**(k - 1) * (p - 2)
+
+    return value
+
+for n in range(1, LIMIT + 1):
+    s = S2(n)
+
+    if s == 0:
+        continue
+
+    if (Phi(n) - 1) % s == 0:
+        print(n)
